@@ -1,18 +1,28 @@
-const express        = require('express');
-const MongoClient    = require('mongodb').MongoClient;
-const cors           = require('cors');
+var express = require('express'),
+  app = express(),
+  port = 8000,
+  mongoose = require('mongoose'),
+  tasks = require('./app/models/modelDB'), //created model loading here
+  db = require('./app/config/db'),
+  bodyParser = require('body-parser');
+  
+  const cors           = require('cors');
+  
+// mongoose instance connection url connection
+mongoose.Promise = global.Promise;
+mongoose.connect(db.url, { useUnifiedTopology: true,useNewUrlParser: true }); 
 
-const bodyParser     = require('body-parser');
-const db             = require('./app/config/db');
-const app            = express();
-const port = 8000;
 
 app.use(bodyParser.urlencoded({ extended: true }));
+app.use(bodyParser.json());
+
+
 app.use(cors());
-MongoClient.connect(db.url, (err, database) => {
-  if (err) return console.log(err)
-  require('./app/routes')(app, database);
-  app.listen(port, () => {
-    console.log('Server starts on ' + port);
-  });               
-})
+
+
+var routes = require('./app/routes/index'); //importing route
+routes(app); //register the route
+
+app.listen(port, () => {
+  console.log('Server starts on ' + port);
+});
