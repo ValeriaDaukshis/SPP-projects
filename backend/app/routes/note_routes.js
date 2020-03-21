@@ -1,58 +1,92 @@
 var ObjectID = require('mongodb').ObjectID;
 
+
     module.exports = function(app, db) {
        
     app.get('/tasks', (req, res) => {
-        db.collection('tasks').find({}).toArray(function(err, result) {
-            if (err) {
-                res.send({'error':'An error has occurred'});
-              } else {
-                res.send(result);
-              }
-          });
+        let cursor = db.collection('tasks').find({});
+        cursor.toArray(function(err, result){
+          if (err) {
+             res.status(500).send({'error':'An error has occurred'});
+          }
+          else{
+            res.status(200).send(result);
+          }
+        });
       });
     app.get('/tasks/:id', (req, res) => {
         const id = req.params.id;
-        console.log(id);
         const details = { '_id': new ObjectID(id) };
         db.collection('tasks').findOne(details, (err, item) => {
           if (err) {
             res.send({'error':'An error has occurred'});
           } else {
-            res.send(item);
+            console.log(item);
+            res.status(200).send(item);
           }
         });
       });
-    app.post('/tasks', (req, res) => {
-      const note = { text: req.body.body, title: req.body.title };
+    app.post('/task', (req, res) => {
+      let json = JSON.stringify(req.body);
+      let data = JSON.parse(json);
+      const note = { 
+        name: data.name, 
+        deadline: data.deadline, 
+        details: data.details, 
+        isMade: data.isMade, 
+      };
       db.collection('tasks').insert(note, (err, result) => {
         if (err) { 
-          res.send({ 'error': 'An error has occurred' }); 
+          res.status(400).send({ 'error': 'An error has occurred' }); 
         } else {
-          res.send(result.ops[0]);
+          res.status(201).send(result.ops[0]);
         }
       });
     });
-    app.put ('/tasks/:id', (req, res) => {
+    app.put ('/task/:id', (req, res) => {
         const id = req.params.id;
         const details = { '_id': new ObjectID(id) };
-        const note = { text: req.body.body, title: req.body.title };
+        const note = { 
+          name: req.body.name, 
+          deadline: req.body.deadline, 
+          details: req.body.details, 
+          isMade: req.body.isMade, 
+        };
         db.collection('tasks').update(details, note, (err, result) => {
           if (err) {
               res.send({'error':'An error has occurred'});
           } else {
-              res.send(note);
+              res.status(200).send(note);
           } 
         });
       });
-    app.delete('/tasks/:id', (req, res) => {
+
+      app.put ('/task/:id/status/:statusBool', (req, res) => {
+        const id = req.params.id;
+        const statusBool = req.params.statusBool;
+        const details = { '_id': new ObjectID(id) };
+        const note = { 
+          name: req.body.name, 
+          deadline: req.body.deadline, 
+          details: req.body.details, 
+          isMade: statusBool, 
+        };
+        db.collection('tasks').update(details, note, (err, result) => {
+          if (err) {
+              res.send({'error':'An error has occurred'});
+          } else {
+              res.status(200).send(result);
+          } 
+        });
+      });
+    app.delete('/task/:id', (req, res) => {
         const id = req.params.id;
         const details = { '_id': new ObjectID(id) };
         db.collection('tasks').remove(details, (err, item) => {
           if (err) {
             res.send({'error':'An error has occurred'});
           } else {
-            res.send('Task ' + id + ' deleted!');
+            res.status(201).send('Task ' + id + ' deleted!');
           } 
         });
       });

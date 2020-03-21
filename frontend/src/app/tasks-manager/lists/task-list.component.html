@@ -1,25 +1,29 @@
 <div class="container">
-    <h2>Customer List</h2>
+    <h2>Tasks List</h2>
     <table class="table table-nonfluid">
       <thead>
-        <th scope="col">#</th>
         <th scope="col">Name</th>
         <th scope="col">Deadline</th>
         <th scope="col">Is Made</th>
       </thead>
       <tbody>
         <tr *ngFor="let task of tasks">
-          <th scope="row">{{task.id}}</th>
           <th scope="row">{{task.name}}</th>
-          <th scope="row">{{task.Deadline}}</th>
+          <th scope="row">{{task.deadline}}</th>
           <th scope="row">{{task.isMade}}</th>
           <td>
             <span class="btn-toolbar" role="toolbar" aria-label="Hive action buttons" style="display: block; white-space:nowrap;"> 
               <div class="btn-group mr-2" role="group" aria-label="View group">
-                <button routerLink="/task/{{task.id}}/details" type="button" class="btn btn-primary">View details</button>
+                <button routerLink="/task/{{task._id}}/details" type="button" class="btn btn-primary">View details</button>
               </div>       
               <div class="btn-group mr-2" role="group" aria-label="Edit group">
-                <button routerLink="/task/{{task.id}}" type="button" class="btn btn-primary">Edit</button>
+                <button routerLink="/task/{{task._id}}" type="button" class="btn btn-primary">Edit</button>
+              </div>
+              <div class="btn-group mr-2" role="group" aria-label="Made group" *ngIf="!task.isMade else Unmade" (click)="onFinish(task._id)">
+                <button type="button" class="btn btn-danger">Made</button>
+              </div>
+              <div class="btn-group mr-2" role="group" aria-label="Unmade group" *ngIf="task.isMade else Made" (click)="onUnfinish(task._id)">
+                <button type="button" class="btn btn-danger">Unmade</button>
               </div>
             </span>
           </td>
