@@ -39,6 +39,10 @@ export class TaskService {
     return this.http.put<Object>(`${this.singleUrl}${task._id}/status/${status}`, form.toString(), {headers: this.headers});
   }
 
+  deleteTask(id: object): Observable<Object> {
+    return this.http.delete<Object>(`${this.singleUrl}${id}`);
+  }
+
   init(task: Task) {
     let form = new HttpParams()
      .set(`_id`, task._id === null ? null : task._id.toString()) 

@@ -29,18 +29,18 @@ export class TaskFormComponent implements OnInit {
       });
   }
 
-  navigateToCustomers() {
+  navigateToTasks() {
     this.router.navigate(['/tasks']);
   }
 
   onCancel() {
-    this.navigateToCustomers();
+    this.navigateToTasks();
   }
   
   onSubmit(task: Task) {
     if(this.existed)
-      this.taskService.updateTask(task).subscribe(c => this.navigateToCustomers);
+      this.taskService.updateTask(task).subscribe(c => this.navigateToTasks);
     else
-       this.taskService.addTask(task).subscribe(c => this.navigateToCustomers);
+       this.taskService.addTask(task).subscribe(c => this.navigateToTasks);
   }
 }

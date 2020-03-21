@@ -19,12 +19,12 @@
               <div class="btn-group mr-2" role="group" aria-label="Edit group">
                 <button routerLink="/task/{{task._id}}" type="button" class="btn btn-primary">Edit</button>
               </div>
-              <div class="btn-group mr-2" role="group" aria-label="Made group" *ngIf="!task.isMade else Unmade" (click)="onFinish(task._id)">
-                <button type="button" class="btn btn-danger">Made</button>
-              </div>
-              <div class="btn-group mr-2" role="group" aria-label="Unmade group" *ngIf="task.isMade else Made" (click)="onUnfinish(task._id)">
-                <button type="button" class="btn btn-danger">Unmade</button>
-              </div>
+              <div class="btn-group mr-2" role="group" aria-label="Finish group" *ngIf="!task.isMade else correct" (click)="onFinish(task._id)">
+                <button type="button" class="btn btn-danger">Finish</button>
+            </div>
+            <div class="btn-group mr-2" role="group" aria-label="Correct group" *ngIf="task.isMade else finish" (click)="onUnfinish(task._id)">
+                <button type="button" class="btn btn-danger">Correct</button>
+            </div>
             </span>
           </td>
         </tr>

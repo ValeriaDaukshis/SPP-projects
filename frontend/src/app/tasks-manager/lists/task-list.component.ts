@@ -20,13 +20,15 @@ export class TaskListComponent implements OnInit {
     this.taskService.getTasks().subscribe(h => this.tasks = h);
   }
 
-  onFinish(id: object){
-    var task = this.tasks.find(h => h._id == id);
+  onFinish(id){
+    let task = this.tasks.find(f=> f._id == id);
     this.taskService.setTaskStatus(task, true).subscribe(c => task.isMade = true);
   }
 
-  onUnfinish(id: object){
-    var task = this.tasks.find(h => h._id == id);
+  onUnfinish(id){
+    let task = this.tasks.find(f=> f._id == id);
     this.taskService.setTaskStatus(task, false).subscribe(c => task.isMade = false);
   }
+
+  
 }

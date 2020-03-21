@@ -9,13 +9,15 @@ import { MainPageComponent } from 'app/main-page/main-page.component';
 import { TaskService } from './tasks-manager/services/task.server';
 import {TaskListComponent} from './tasks-manager/lists/task-list.component';
 import {TaskFormComponent} from './tasks-manager/forms/task-form.component';
+import {DetailTaskFormComponent} from './tasks-manager/forms/detailTask-form.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     MainPageComponent,
     TaskListComponent,
-    TaskFormComponent
+    TaskFormComponent,
+    DetailTaskFormComponent
   ],
   imports: [
     BrowserModule,
