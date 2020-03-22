@@ -2,7 +2,8 @@ var express = require('express'),
   app = express(),
   port = 8000,
   mongoose = require('mongoose'),
-  tasks = require('./app/models/modelDB'), //created model loading here
+  tasks = require('./app/models/task.model'), //created model loading here
+  users = require('./app/models/user.model'), //created model loading here
   db = require('./app/config/db'),
   bodyParser = require('body-parser');
   

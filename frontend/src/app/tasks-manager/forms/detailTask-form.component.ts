@@ -38,6 +38,6 @@ export class DetailTaskFormComponent implements OnInit {
   }
   
   onDelete(){
-    this.taskService.deleteTask(this.task._id).subscribe(c => this.navigateToTasks());
+    this.taskService.deleteTask(this.task._id).subscribe(c => this.router.navigate(['/tasks']));
   }
 }

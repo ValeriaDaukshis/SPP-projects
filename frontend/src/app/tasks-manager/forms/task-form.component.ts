@@ -39,8 +39,8 @@ export class TaskFormComponent implements OnInit {
   
   onSubmit(task: Task) {
     if(this.existed)
-      this.taskService.updateTask(task).subscribe(c => this.navigateToTasks);
+      this.taskService.updateTask(task).subscribe(c => this.router.navigate(['/tasks']));
     else
-       this.taskService.addTask(task).subscribe(c => this.navigateToTasks);
+       this.taskService.addTask(task).subscribe(c => this.router.navigate(['/tasks']));
   }
 }

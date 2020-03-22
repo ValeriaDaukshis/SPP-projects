@@ -1,5 +1,6 @@
 var mongoose = require('mongoose'),
     Task = mongoose.model('tasks');
+    mongoose.set('useFindAndModify', false);
 
 exports.getAllTasks = function(req, res){
     Task.find({},function(err, result){
@@ -48,7 +49,7 @@ exports.updateTask = function(req, res){
         } else {
             res.status(200).send(task);
         } 
-    });
+    }, false);
 }
 
 exports.changeTaskStatus = function(req, res){
@@ -66,11 +67,11 @@ exports.changeTaskStatus = function(req, res){
 }   
 
 exports.deleteTask = function(req, res){
-    Task.remove({_id: req.params.id}, function(err, task) {
+    Task.deleteOne({_id: req.params.id}, function(err, task) {
         if (err) {
         res.status(500).send({'error':'An error has occurred'});
         } else {
         res.status(201);
         } 
-    });
+    }, false);
 }
