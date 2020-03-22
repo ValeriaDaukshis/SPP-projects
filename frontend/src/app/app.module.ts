@@ -10,6 +10,10 @@ import { TaskService } from './tasks-manager/services/task.server';
 import {TaskListComponent} from './tasks-manager/lists/task-list.component';
 import {TaskFormComponent} from './tasks-manager/forms/task-form.component';
 import {DetailTaskFormComponent} from './tasks-manager/forms/detailTask-form.component';
+import { LoginComponent } from './login-manager/forms/login.component';
+import { AuthenticationService } from './login-manager/services/authentication.service';
+import { ErrorInterceptor } from './helpers/error.interceptor';
+import { JwtInterceptor } from './helpers/jwt.interceptor';
 
 @NgModule({
   declarations: [
@@ -17,7 +21,8 @@ import {DetailTaskFormComponent} from './tasks-manager/forms/detailTask-form.com
     MainPageComponent,
     TaskListComponent,
     TaskFormComponent,
-    DetailTaskFormComponent
+    DetailTaskFormComponent,
+    LoginComponent
   ],
   imports: [
     BrowserModule,
@@ -30,6 +35,10 @@ import {DetailTaskFormComponent} from './tasks-manager/forms/detailTask-form.com
     // Angular providers
     HttpClient,
     TaskService,
+    AuthenticationService,
+    ErrorInterceptor,
+    JwtInterceptor
+
   ],
   bootstrap: [AppComponent]
 })
