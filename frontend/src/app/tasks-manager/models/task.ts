@@ -8,6 +8,6 @@ export class Task{
         public details: string,
         public isMade: boolean,
         public isExpired : boolean,
-        public user: User,
+        public user_id: Object,
     ){}
 }

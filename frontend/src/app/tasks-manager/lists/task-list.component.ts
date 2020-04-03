@@ -12,6 +12,7 @@ export class TaskListComponent implements OnInit {
 
   tasks: Task[];
   today: number;
+  userId: Object;
 
   constructor(private taskService: TaskService) { }
 
@@ -20,7 +21,9 @@ export class TaskListComponent implements OnInit {
   }
 
   getAllTasks() {
-    this.taskService.getTasks().subscribe(h => this.getDates(h));
+    this.userId = JSON.parse(localStorage.getItem('currentUser'))._id;
+    this.taskService.getTasks(this.userId).subscribe(h => this.getDates(h));
+    
   }
 
   getDates(h){
@@ -44,14 +47,14 @@ export class TaskListComponent implements OnInit {
   }
 
   showUnfinished(){
-    this.taskService.getUnfinished().subscribe(h => this.getDates(h));
+    this.taskService.getUnfinished(this.userId).subscribe(h => this.getDates(h));
   }
 
   sortByName(){
-    this.taskService.getSortedByNameTasks().subscribe(h => this.getDates(h));
+    this.taskService.getSortedByNameTasks(this.userId).subscribe(h => this.getDates(h));
   }
 
   sortByDeadline(){
-    this.taskService.getSortedByDeadlineTasks().subscribe(h => this.getDates(h));
+    this.taskService.getSortedByDeadlineTasks(this.userId).subscribe(h => this.getDates(h));
   }
 }

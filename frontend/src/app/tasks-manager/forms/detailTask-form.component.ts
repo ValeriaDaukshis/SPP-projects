@@ -23,14 +23,14 @@ export class DetailTaskFormComponent implements OnInit {
 
   ngOnInit() {
     this.route.params.subscribe(p => {
-        if (p['id'] === undefined) return;
-        this.taskService.getTask(p['id']).subscribe(h => this.task = h);
+        if (p['id'] === undefined || p['userId'] === undefined) return;
+        this.taskService.getTask(p['userId'], p['id']).subscribe(h => this.task = h);
         this.existed = true;
       });
   }
 
   navigateToTasks() {
-    this.router.navigate(['/tasks']);
+    this.router.navigate([`${this.task.user_id}/tasks`]);
   }
 
   onCancel() {
@@ -38,6 +38,6 @@ export class DetailTaskFormComponent implements OnInit {
   }
   
   onDelete(){
-    this.taskService.deleteTask(this.task._id).subscribe(c => this.router.navigate(['/tasks']));
+    this.taskService.deleteTask(this.task.user_id, this.task._id).subscribe(c => this.router.navigate([`${this.task.user_id}/tasks`]));
   }
 }

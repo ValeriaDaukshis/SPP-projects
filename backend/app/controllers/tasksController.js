@@ -3,7 +3,9 @@ var mongoose = require('mongoose'),
     mongoose.set('useFindAndModify', false);
 
 exports.getAllTasks = function(req, res){
-    Task.find({user_id: req},function(err, result){
+    let user_uniq_id = req.params.userId;
+    
+    Task.find({user_id: new mongoose.Types.ObjectId(user_uniq_id)}, function(err, result){
         if (err) 
             res.status(500).send({'error':'An error has occurred'});
         else
@@ -12,7 +14,9 @@ exports.getAllTasks = function(req, res){
 }
 
 exports.getSortedByDeadline = function(req, res){
-    Task.find({}).sort({deadline: 'asc'}).exec(function(err, result){
+    let user_uniq_id = req.params.userId;
+    Task.find({user_id: new mongoose.Types.ObjectId(user_uniq_id)})
+    .sort({deadline: 'asc'}).exec(function(err, result){
         if (err) 
             res.status(500).send({'error':'An error has occurred'});
         else
@@ -21,7 +25,9 @@ exports.getSortedByDeadline = function(req, res){
 }
 
 exports.getSortedByName = function(req, res){
-    Task.find({}).sort({name: 'asc'}).exec(function(err, result){
+    let user_uniq_id = req.params.userId;
+    Task.find({user_id: new mongoose.Types.ObjectId(user_uniq_id)})
+    .sort({name: 'asc'}).exec(function(err, result){
         if (err) 
             res.status(500).send({'error':'An error has occurred'});
         else
@@ -30,7 +36,9 @@ exports.getSortedByName = function(req, res){
 }
 
 exports.getUnfinished = function(req, res){
-    Task.find({isMade: false}).exec(function(err, result){
+    let user_uniq_id = req.params.userId;
+    Task.find({user_id: new mongoose.Types.ObjectId(user_uniq_id), isMade: false})
+    .exec(function(err, result){
         if (err) 
             res.status(500).send({'error':'An error has occurred'});
         else
@@ -57,6 +65,7 @@ exports.createTask = function(req, res){
         deadline: data.deadline, 
         details: data.details, 
         isMade: data.isMade, 
+        user_id: data.user_id,
     };
 
     var new_task = new Task(note);
