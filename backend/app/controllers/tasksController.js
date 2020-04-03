@@ -3,7 +3,34 @@ var mongoose = require('mongoose'),
     mongoose.set('useFindAndModify', false);
 
 exports.getAllTasks = function(req, res){
-    Task.find({},function(err, result){
+    Task.find({user_id: req},function(err, result){
+        if (err) 
+            res.status(500).send({'error':'An error has occurred'});
+        else
+            res.status(200).send(result);
+    });
+}
+
+exports.getSortedByDeadline = function(req, res){
+    Task.find({}).sort({deadline: 'asc'}).exec(function(err, result){
+        if (err) 
+            res.status(500).send({'error':'An error has occurred'});
+        else
+            res.status(200).send(result);
+    });
+}
+
+exports.getSortedByName = function(req, res){
+    Task.find({}).sort({name: 'asc'}).exec(function(err, result){
+        if (err) 
+            res.status(500).send({'error':'An error has occurred'});
+        else
+            res.status(200).send(result);
+    });
+}
+
+exports.getUnfinished = function(req, res){
+    Task.find({isMade: false}).exec(function(err, result){
         if (err) 
             res.status(500).send({'error':'An error has occurred'});
         else
@@ -55,7 +82,7 @@ exports.updateTask = function(req, res){
 exports.changeTaskStatus = function(req, res){
     const statusBool = req.params.statusBool;
 
-    req.body.status = statusBool;
+    req.body.isMade = statusBool;
 
     Task.findOneAndUpdate({_id: req.params.id}, req.body, {new: true}, function(err, task) {
         if (err) {

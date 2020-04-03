@@ -11,7 +11,7 @@ import { TaskService } from '../services/task.server';
 
 export class TaskFormComponent implements OnInit {
 
-  task = new Task(null, "", "", "", false);
+  task = new Task(null, "", "", "", false, false, null);
   existed = false;
 
   constructor(

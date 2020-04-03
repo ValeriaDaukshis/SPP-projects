@@ -8,11 +8,11 @@ import { AuthGuard } from './login-manager/services/auth.guard';
 import { RegComponent } from './login-manager/forms/reg-form.component';
 
 const routes: Routes = [
-  { path: '', redirectTo: '/tasks', pathMatch: 'full' },
-  { path: 'tasks', component: TaskListComponent,  canActivate: [AuthGuard]},
-  { path: 'task', component: TaskFormComponent },
-  { path: 'task/:id', component: TaskFormComponent },
-  { path: 'task/:id/details', component: DetailTaskFormComponent },
+  { path: '', redirectTo: ':userId/tasks', pathMatch: 'full' },
+  { path: ':userId/tasks', component: TaskListComponent,  canActivate: [AuthGuard]},
+  { path: ':userId/task', component: TaskFormComponent },
+  { path: ':userId/task/:id', component: TaskFormComponent },
+  { path: ':userId/task/:id/details', component: DetailTaskFormComponent },
   { path: 'login', component: LoginComponent },
   { path: 'registration', component: RegComponent },
 ];

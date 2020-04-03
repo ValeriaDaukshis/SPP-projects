@@ -6,6 +6,9 @@ module.exports = function(app) {
   console.log("index");
 
   app.route('/tasks').get(controller.getAllTasks);
+  app.route('/tasks/sortByName').get(controller.getSortedByName);
+  app.route('/tasks/sortByDeadline').get(controller.getSortedByDeadline);
+  app.route('/tasks/getUnfinished').get(controller.getUnfinished);
   app.route('/tasks/:id').get(controller.getTaskById);
 
   app.route('/task').post(controller.createTask);

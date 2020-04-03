@@ -19,6 +19,10 @@ var TaskSchema = new Schema({
     type: Boolean,
     required: true
   },
+  user_id:{
+    type: Object,
+    required: false
+  }
 });
 
 module.exports = mongoose.model('tasks', TaskSchema);

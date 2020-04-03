@@ -1,14 +1,17 @@
 import { Component, OnInit } from '@angular/core';
 import { Task } from '../models/task';
 import { TaskService } from '../services/task.server';
+import { CommonModule } from '@angular/common';  
+import { BrowserModule } from '@angular/platform-browser';
 
 @Component({
   selector: 'app-customer-item',
-  templateUrl: './task-list.component.html'
+  templateUrl: './task-list.component.html',
 })
 export class TaskListComponent implements OnInit {
 
   tasks: Task[];
+  today: number;
 
   constructor(private taskService: TaskService) { }
 
@@ -17,7 +20,17 @@ export class TaskListComponent implements OnInit {
   }
 
   getAllTasks() {
-    this.taskService.getTasks().subscribe(h => this.tasks = h);
+    this.taskService.getTasks().subscribe(h => this.getDates(h));
+  }
+
+  getDates(h){
+    this.tasks = h;
+    console.log(this.tasks);
+    this.today = Date.parse(new Date(new Date().getFullYear(),new Date().getMonth(), new Date().getDate()).toString());
+    this.tasks.forEach(element => {
+      if(this.today > Date.parse(element.deadline))
+        element.isExpired = true;
+    });
   }
 
   onFinish(id){
@@ -30,5 +43,15 @@ export class TaskListComponent implements OnInit {
     this.taskService.setTaskStatus(task, false).subscribe(c => task.isMade = false);
   }
 
-  
+  showUnfinished(){
+    this.taskService.getUnfinished().subscribe(h => this.getDates(h));
+  }
+
+  sortByName(){
+    this.taskService.getSortedByNameTasks().subscribe(h => this.getDates(h));
+  }
+
+  sortByDeadline(){
+    this.taskService.getSortedByDeadlineTasks().subscribe(h => this.getDates(h));
+  }
 }

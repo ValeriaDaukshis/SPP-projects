@@ -1,3 +1,5 @@
+import { User } from "app/login-manager/models/user";
+
 export class Task{
     constructor(
         public _id: object,
@@ -5,5 +7,7 @@ export class Task{
         public deadline: string,
         public details: string,
         public isMade: boolean,
+        public isExpired : boolean,
+        public user: User,
     ){}
 }

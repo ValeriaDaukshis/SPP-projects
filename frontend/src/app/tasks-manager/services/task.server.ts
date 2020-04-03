@@ -20,6 +20,18 @@ export class TaskService {
     return this.http.get<Array<Task>>(this.url);
   }
 
+  getSortedByDeadlineTasks(): Observable<Array<Task>> {
+    return this.http.get<Array<Task>>(this.url + "sortByDeadline");
+  }
+
+  getSortedByNameTasks(): Observable<Array<Task>> {
+    return this.http.get<Array<Task>>(this.url + "sortByName");
+  }
+
+  getUnfinished(): Observable<Array<Task>> {
+    return this.http.get<Array<Task>>(this.url + "getUnfinished");
+  }
+
   getTask(id: number): Observable<Task> {
     return this.http.get<Task>(`${this.url}${id}`);
   }
